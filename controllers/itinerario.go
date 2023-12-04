@@ -60,7 +60,7 @@ func (tc *ItinerarioController) UpdateItinerarioByID(c *gin.Context) {
 
 	// Verificar si el itinerario existe
 	if err := tc.Txn.First(&itinerario, itinerarioID).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Itinerario not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Itinerario not found!"})
 		return
 	}
 
