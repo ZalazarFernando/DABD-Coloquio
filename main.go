@@ -49,11 +49,19 @@ func main() {
 	tc := &controllers.TransporteController{Txn: db}
 	cc := &controllers.CiudadController{Txn: db}
 	vc := &controllers.ViajeController{Txn: db}
+	ic := &controllers.ItinerarioController{Txn: db}
 
 	r.GET("/administradores", ac.GetAdministradores)
 	r.GET("/transportes", tc.GetTransportes)
+	r.GET("/itinerario", ic.GetItinerarios)
 
-	//ciudad
+	//get and delete itinerario
+	r.GET("/itinerarios/:id", ic.GetItinerarioByID)
+	r.DELETE("/delete-itinerarios/:id", ic.DeleteItinerarioByID)
+
+	//get and delete transporte
+	r.GET("/transporte/:id", tc.GetTransporteByID)
+	r.DELETE("/delete-transporte/:id", tc.DeleteTransporteByID)
 
 	//get ciudades por nombre
 	r.GET("/ciudad/:name", cc.GetCiudades)
