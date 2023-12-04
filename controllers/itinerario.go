@@ -53,3 +53,28 @@ func (tc *ItinerarioController) DeleteItinerarioByID(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Itinerario deleted successfully"})
 }
+
+func (tc *ItinerarioController) UpdateItinerarioByID(c *gin.Context) {
+	itinerarioID := c.Param("id")
+	var itinerario models.Itinerario
+
+	// Verificar si el itinerario existe
+	if err := tc.Txn.First(&itinerario, itinerarioID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Itinerario not found"})
+		return
+	}
+
+	// Actualizar el itinerario con los nuevos datos (puedes ajustar esto según tus necesidades)
+	if err := c.ShouldBindJSON(&itinerario); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Guardar la actualización en la base de datos
+	if err := tc.Txn.Save(&itinerario).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update Itinerario"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": itinerario})
+}

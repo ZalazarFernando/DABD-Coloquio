@@ -52,16 +52,18 @@ func main() {
 	ic := &controllers.ItinerarioController{Txn: db}
 
 	r.GET("/administradores", ac.GetAdministradores)
-	r.GET("/transportes", tc.GetTransportes)
-	r.GET("/itinerario", ic.GetItinerarios)
 
-	//get and delete itinerario
+	//CRUD itinerario
+	r.GET("/itinerario", ic.GetItinerarios)
 	r.GET("/itinerarios/:id", ic.GetItinerarioByID)
 	r.DELETE("/delete-itinerarios/:id", ic.DeleteItinerarioByID)
+	r.PATCH("/update-itinerario/:id", ic.UpdateItinerarioByID)
 
-	//get and delete transporte
+	//CRUD transporte
+	r.GET("/transportes", tc.GetTransportes)
 	r.GET("/transporte/:id", tc.GetTransporteByID)
 	r.DELETE("/delete-transporte/:id", tc.DeleteTransporteByID)
+	r.PATCH("/update-transporte/:id", tc.UpdateTransporteByID)
 
 	//get ciudades por nombre
 	r.GET("/ciudad/:name", cc.GetCiudades)
